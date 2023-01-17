@@ -26,7 +26,6 @@ class NumberOfEvents extends Component {
           type="number"
           className="noe-Input"
           value={this.state.eventCount}
-          // onChange={this.noeInput}
           onChange={(event) => {
             this.noeInput(event);
           }}

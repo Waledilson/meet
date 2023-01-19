@@ -17,7 +17,7 @@ class NumberOfEvents extends Component {
       });
     } else {
       this.setState({
-        eventCount: e.target.value,
+        eventCount: inputValue,
         errorText: "",
       });
     }
@@ -32,7 +32,7 @@ class NumberOfEvents extends Component {
     // const { noe } = this.state;
     return (
       <div className="numOfEvents">
-        <ErrorAlert test={this.state.infoText} />
+        <ErrorAlert test={this.state.errorText} />
         <h2>Number Of Events</h2>
         <input
           type="number"

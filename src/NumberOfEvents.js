@@ -4,7 +4,7 @@ import { ErrorAlert } from "./Alert";
 class NumberOfEvents extends Component {
   state = {
     eventCount: 32,
-    errorText: "",
+    infoText: "",
   };
 
   noeInput = (e) => {
@@ -13,12 +13,12 @@ class NumberOfEvents extends Component {
     if (inputValue <= 0 || inputValue >= 33) {
       this.setState({
         eventCount: inputValue,
-        errorText: "please pick a number betwen 0 - 100",
+        infoText: "please pick a number betwen 0 - 100",
       });
     } else {
       this.setState({
         eventCount: inputValue,
-        errorText: "",
+        infoText: "",
       });
     }
     this.props.updateEvents(null, inputValue);
@@ -32,7 +32,7 @@ class NumberOfEvents extends Component {
     // const { noe } = this.state;
     return (
       <div className="numOfEvents">
-        <ErrorAlert test={this.state.errorText} />
+        <ErrorAlert test={this.state.infoText} />
         <h2>Number Of Events</h2>
         <input
           type="number"

@@ -32,8 +32,8 @@ class NumberOfEvents extends Component {
     // const { noe } = this.state;
     return (
       <div className="numOfEvents">
-        <ErrorAlert text={this.state.errorText} />
         <h2>Number Of Events</h2>
+        <ErrorAlert text={this.state.errorText} />
         <input
           type="number"
           className="noe-Input"

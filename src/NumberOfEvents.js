@@ -17,7 +17,7 @@ class NumberOfEvents extends Component {
       });
     } else {
       this.setState({
-        eventCount: inputValue,
+        eventCount: e.target.value,
         errorText: "",
       });
     }

@@ -15,6 +15,7 @@ class App extends Component {
     selectedLocation: "all",
     eventCount: 32,
     showWelcomeScreen: undefined,
+    Offline,
   };
 
   async componentDidMount() {
@@ -34,7 +35,7 @@ class App extends Component {
     }
   }
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
     this.mounted = false;
   }
 

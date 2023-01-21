@@ -8,16 +8,6 @@ export const extractLocations = (events) => {
   return locations;
 };
 
-export const checkToken = async (accessToken) => {
-  const result = await fetch(
-    `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
-  )
-    .then((res) => res.json())
-    .catch((error) => error.json());
-
-  return result;
-};
-
 const removeQuery = () => {
   if (window.history.pushState && window.location.pathname) {
     var newurl =
@@ -63,6 +53,16 @@ export const getEvents = async () => {
     NProgress.done();
     return result.data.events;
   }
+};
+
+export const checkToken = async (accessToken) => {
+  const result = await fetch(
+    `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
+  )
+    .then((res) => res.json())
+    .catch((error) => error.json());
+
+  return result;
 };
 
 const getToken = async (code) => {

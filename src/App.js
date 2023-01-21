@@ -5,6 +5,7 @@ import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
 import "./nprogress.css";
 import { extractLocations, getEvents } from "./api";
+import { OfflineAlert } from "./Alert";
 
 class App extends Component {
   state = {

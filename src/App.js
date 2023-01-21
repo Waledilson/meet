@@ -15,7 +15,6 @@ class App extends Component {
     selectedLocation: "all",
     eventCount: 32,
     showWelcomeScreen: undefined,
-    Offline,
   };
 
   async componentDidMount() {
@@ -31,6 +30,16 @@ class App extends Component {
           events = events.slice(0, this.state.eventCount);
           this.setState({ events, locations: extractLocations(events) });
         }
+      });
+    }
+    if (!navigator.onLine) {
+      this.setState({
+        warningText:
+          "It seems that you're not connected to the internet, your data was loaded from the cache.",
+      });
+    } else {
+      this.setState({
+        warningText: "",
       });
     }
   }
@@ -73,15 +82,7 @@ class App extends Component {
       return <div className="App" />;
     return (
       <div className="App">
-        <div className="OfflineAlert">
-          {!navigator.onLine && (
-            <OfflineAlert
-              text={
-                "You are currently using the app offline. Some information may be out of date."
-              }
-            />
-          )}
-        </div>
+        <OfflineAlert text={this.state.offlineText} />
         <CitySearch
           locations={this.state.locations}
           updateEvents={this.updateEvents}

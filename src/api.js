@@ -89,13 +89,26 @@ export const getAccessToken = async () => {
     const searchParams = new URLSearchParams(window.location.search);
     const code = await searchParams.get("code");
     if (!code) {
-      const results = await axios.get(
+      const response = await fetch(
         "https://rs80bt6xd1.execute-api.us-east-1.amazonaws.com/dev/api/get-auth-url"
       );
-      const { authUrl } = results.data;
+      const results = await response.json();
+      console.log(results);
+      const { authUrl } = results;
       return (window.location.href = authUrl);
     }
     return code && getToken(code);
   }
   return accessToken;
 };
+
+//       const results = await axios.get(
+//         "https://rs80bt6xd1.execute-api.us-east-1.amazonaws.com/dev/api/get-auth-url"
+//       );
+//       const { authUrl } = results.data;
+//       return (window.location.href = authUrl);
+//     }
+//     return code && getToken(code);
+//   }
+//   return accessToken;
+// };

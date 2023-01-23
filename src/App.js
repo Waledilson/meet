@@ -34,12 +34,12 @@ class App extends Component {
     }
     if (!navigator.onLine) {
       this.setState({
-        warningText:
+        offlineText:
           "You are currently not connected to the internet, your data was loaded from the cache.",
       });
     } else {
       this.setState({
-        warningText: "",
+        offlineText: "",
       });
     }
   }

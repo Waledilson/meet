@@ -17,31 +17,32 @@ class App extends Component {
     showWelcomeScreen: undefined,
   };
 
-  // async componentDidMount() {
-  //   this.mounted = true;
-  //   const accessToken = localStorage.getItem("access_token");
-  //   const isTokenValid = (await checkToken(accessToken)).error ? false : true;
-  //   const searchParams = new URLSearchParams(window.location.search);
-  //   const code = searchParams.get("code");
-  //   this.setState({ showWelcomeScreen: !(code || isTokenValid) });
-  //   if ((code || isTokenValid) && this.mounted) {
-  //     getEvents().then((events) => {
-  //       if (this.mounted) {
-  //         events = events.slice(0, this.state.eventCount);
-  //         this.setState({ events, locations: extractLocations(events) });
-  //       }
-  //     });
-  //   }
   async componentDidMount() {
     this.mounted = true;
-    const accessToken = localStorage.getItem("access_token"); // These 3 lines are from CF documentation but they work when added
-    const searchParams = new URLSearchParams(window.location.search); // These 3 lines are from CF documentation but they work when added
-    const code = searchParams.get("code"); // These 3 lines are from CF documentation but they work when added
-    getEvents().then((events) => {
-      if (this.mounted) {
-        this.setState({ events, locations: extractLocations(events) });
-      }
-    });
+    const accessToken = localStorage.getItem("access_token");
+    // const isTokenValid = (await checkToken(accessToken)).error ? false : true;
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get("code");
+    this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+    if ((code || isTokenValid) && this.mounted) {
+      getEvents().then((events) => {
+        if (this.mounted) {
+          events = events.slice(0, this.state.eventCount);
+          this.setState({ events, locations: extractLocations(events) });
+        }
+      });
+    }
+
+    // async componentDidMount() {
+    //   this.mounted = true;
+    //   const accessToken = localStorage.getItem("access_token"); // These 3 lines are from CF documentation but they work when added
+    //   const searchParams = new URLSearchParams(window.location.search); // These 3 lines are from CF documentation but they work when added
+    //   const code = searchParams.get("code"); // These 3 lines are from CF documentation but they work when added
+    //   getEvents().then((events) => {
+    //     if (this.mounted) {
+    //       this.setState({ events, locations: extractLocations(events) });
+    //     }
+    //   });
 
     if (!navigator.onLine) {
       this.setState({

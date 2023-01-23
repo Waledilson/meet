@@ -4,7 +4,9 @@ import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
 import "./nprogress.css";
-import { extractLocations, getEvents } from "./api";
+import WelcomeScreen from "./WelcomeScreen";
+import { getEvents, extractLocations, checkToken, getAccessToken } from "./api";
+import { OfflineAlert } from "./Alert";
 
 class App extends Component {
   state = {
@@ -12,19 +14,49 @@ class App extends Component {
     locations: [],
     selectedLocation: "all",
     eventCount: 32,
+    showWelcomeScreen: undefined,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.mounted = true;
-    getEvents().then((events) => {
-      if (this.mounted) {
-        events = events.slice(0, this.state.eventCount);
-        this.setState({ events, locations: extractLocations(events) });
-      }
-    });
+    const accessToken = localStorage.getItem("access_token");
+    const isTokenValid = (await checkToken(accessToken)).error ? false : true;
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get("code");
+    this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+    if ((code || isTokenValid) && this.mounted) {
+      getEvents().then((events) => {
+        if (this.mounted) {
+          events = events.slice(0, this.state.eventCount);
+          this.setState({ events, locations: extractLocations(events) });
+        }
+      });
+    }
+
+    // async componentDidMount() {
+    //   this.mounted = true;
+    //   const accessToken = localStorage.getItem("access_token"); // These 3 lines are from CF documentation but they work when added
+    //   const searchParams = new URLSearchParams(window.location.search); // These 3 lines are from CF documentation but they work when added
+    //   const code = searchParams.get("code"); // These 3 lines are from CF documentation but they work when added
+    //   getEvents().then((events) => {
+    //     if (this.mounted) {
+    //       this.setState({ events, locations: extractLocations(events) });
+    //     }
+    //   });
+
+    if (!navigator.onLine) {
+      this.setState({
+        offlineText:
+          "You are currently not connected to the internet, your data was loaded from the cache.",
+      });
+    } else {
+      this.setState({
+        offlineText: "",
+      });
+    }
   }
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
     this.mounted = false;
   }
 
@@ -58,8 +90,11 @@ class App extends Component {
   };
 
   render() {
+    if (this.state.showWelcomeScreen === undefined)
+      return <div className="App" />;
     return (
       <div className="App">
+        <OfflineAlert text={this.state.offlineText} />
         <CitySearch
           locations={this.state.locations}
           updateEvents={this.updateEvents}
@@ -69,6 +104,12 @@ class App extends Component {
           eventCount={this.state.eventCount}
         />
         <EventList events={this.state.events} />
+        <WelcomeScreen
+          showWelcomeScreen={this.state.showWelcomeScreen}
+          getAccessToken={() => {
+            getAccessToken();
+          }}
+        />
       </div>
     );
   }

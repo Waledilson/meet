@@ -2,10 +2,31 @@ import { mockData } from "./mock-data";
 import NProgress from "nprogress";
 import axios from "axios";
 
-export const extractLocations = (events) => {
-  var extractLocations = events.map((event) => event.location);
-  var locations = [...new Set(extractLocations)];
-  return locations;
+const getToken = async (code) => {
+  const encodeCode = encodeURIComponent(code);
+  const { access_token } = await fetch(
+    "https://rs80bt6xd1.execute-api.us-east-1.amazonaws.com/dev/api/token" +
+      "/" +
+      encodeCode
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .catch((error) => error);
+
+  access_token && localStorage.setItem("access_token", access_token);
+
+  return access_token;
+};
+
+export const checkToken = async (accessToken) => {
+  const result = await fetch(
+    `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
+  )
+    .then((res) => res.json())
+    .catch((error) => error.json());
+
+  return result;
 };
 
 const removeQuery = () => {
@@ -20,6 +41,12 @@ const removeQuery = () => {
     newurl = window.location.protocol + "//" + window.location.host;
     window.history.pushState("", "", newurl);
   }
+};
+
+export const extractLocations = (events) => {
+  var extractLocations = events.map((event) => event.location);
+  var locations = [...new Set(extractLocations)];
+  return locations;
 };
 
 export const getEvents = async () => {
@@ -51,33 +78,6 @@ export const getEvents = async () => {
     NProgress.done();
     return result.data.events;
   }
-};
-
-const getToken = async (code) => {
-  const encodeCode = encodeURIComponent(code);
-  const { access_token } = await fetch(
-    "https://rs80bt6xd1.execute-api.us-east-1.amazonaws.com/dev/api/token" +
-      "/" +
-      encodeCode
-  )
-    .then((res) => {
-      return res.json();
-    })
-    .catch((error) => error);
-
-  access_token && localStorage.setItem("access_token", access_token);
-
-  return access_token;
-};
-
-export const checkToken = async (accessToken) => {
-  const result = await fetch(
-    `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
-  )
-    .then((res) => res.json())
-    .catch((error) => error.json());
-
-  return result;
 };
 
 export const getAccessToken = async () => {

@@ -137,7 +137,6 @@ export const getEvents = async () => {
   }
   if (!navigator.onLine) {
     const data = localStorage.getItem("lastEvents");
-    console.log(localStorage);
     NProgress.done();
     return data ? JSON.parse(data).events : [];
   }
@@ -159,7 +158,7 @@ export const getEvents = async () => {
     return result.data.events;
   }
 };
-console.log(localStorage);
+console.log(data);
 
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);

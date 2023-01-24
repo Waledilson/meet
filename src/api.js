@@ -150,7 +150,6 @@ export const getEvents = async () => {
       token;
     const result = await axios.get(url);
     if (result.data) {
-      console.log(result);
       var locations = extractLocations(result.data.events);
       localStorage.setItem("lastEvents", JSON.stringify(result.data));
       localStorage.setItem("locations", JSON.stringify(locations));
@@ -159,6 +158,7 @@ export const getEvents = async () => {
     return result.data.events;
   }
 };
+console.log(localStorage);
 
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);

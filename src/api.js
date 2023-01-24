@@ -158,7 +158,6 @@ export const getEvents = async () => {
     return result.data.events;
   }
 };
-console.log(data);
 
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);

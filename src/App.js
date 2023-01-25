@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
+import EventGenre from "./EventGenre";
 import "./nprogress.css";
 import WelcomeScreen from "./WelcomeScreen";
 import {
@@ -127,6 +128,7 @@ class App extends Component {
           eventCount={this.state.eventCount}
         />
         <h4>Events in each city</h4>
+        <EventGenre />
         <ResponsiveContainer height={400}>
           <ScatterChart
             margin={{

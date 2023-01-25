@@ -128,7 +128,7 @@ class App extends Component {
           eventCount={this.state.eventCount}
         />
         <h4>Events in each city</h4>
-        <EventGenre />
+        <EventGenre events={this.state.events} />
         <ResponsiveContainer height={400}>
           <ScatterChart
             margin={{

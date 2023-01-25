@@ -13,7 +13,7 @@ class NumberOfEvents extends Component {
     if (inputValue <= 0 || inputValue >= 33) {
       this.setState({
         eventCount: inputValue,
-        errorText: "Please pick a number betwen 0 - 100",
+        errorText: "Please pick a number betwen 1 - 32",
       });
     } else {
       this.setState({

@@ -5,4 +5,4 @@ A test-driven-developed React app that lets the user find coding events in or ne
 <br><br>
 The app uses React, node.js, css, html, also testing with Enzyme, Puppeteer and is hosted using Github pages.
 <br><br>
-<img src="src/Screen Shot 2023-01-25 at 09.51.51.png">
+<img src="src/Screen Shot 2023-01-25 at 12.45.04.png">

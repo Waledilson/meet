@@ -18,7 +18,7 @@ const EventGenre = ({ events }) => {
       const data = genres
         .map((genre) => {
           const value = events.filter(
-            (event) => genre.some((g) => event.summary.includes(g))
+            (event) => genres.some((g) => event.summary.includes(g))
             // event.summary.split(" ").includes(genre)
           ).length;
           return { name: genre, value };

@@ -15,14 +15,15 @@ const EventGenre = ({ events }) => {
         "Angular",
       ];
 
-      const data = genres.map((genre) => {
-        const value = events.filter((event) =>
-          // => genres.some((g) => event.summary.includes(g))
-          event.summary.split(/[\s-]/).includes(genre)
-        ).length;
-        return { name: genre, value };
-      });
-      // .filter(({ value }) => value > 0);
+      const data = genres
+        .map((genre) => {
+          const value = events.filter((event) =>
+            // => genres.some((g) => event.summary.includes(g))
+            event.summary.split(" ").includes(genre)
+          ).length;
+          return { name: genre, value };
+        })
+        .filter(({ value }) => value > 0);
       return data;
     };
     setData(() => getData());
